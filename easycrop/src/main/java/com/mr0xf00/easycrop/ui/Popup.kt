@@ -3,7 +3,7 @@ package com.mr0xf00.easycrop.ui
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.GenericShape
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.Path
@@ -112,7 +112,7 @@ internal fun OptionsPopup(
     ) {
         Surface(
             shape = popupShape(anchorPos = anchorPos),
-            elevation = 8.dp,
+            shadowElevation = 8.dp,
         ) {
             if (isVertical) LazyColumn {
                 items(optionCount) { i -> option(i) }

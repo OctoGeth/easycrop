@@ -6,10 +6,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -90,9 +95,9 @@ private fun ButtonsBar(
     Surface(
         modifier = modifier,
         shape = CircleShape,
-        elevation = 4.dp,
-        color = MaterialTheme.colors.surface.copy(alpha = .8f),
-        contentColor = contentColorFor(MaterialTheme.colors.surface)
+        shadowElevation = 4.dp,
+        color = MaterialTheme.colorScheme.surface.copy(alpha = .8f),
+        contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
     ) {
         if (LocalVerticalControls.current) Column(
             modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -107,7 +112,6 @@ private fun ButtonsBar(
         }
     }
 }
-
 
 
 @Composable
@@ -132,7 +136,7 @@ private fun ShapeItem(
 ) {
     val color by animateColorAsState(
         targetValue = if (!selected) LocalContentColor.current
-        else MaterialTheme.colors.secondaryVariant
+        else MaterialTheme.colorScheme.secondary, label = ""
     )
     IconButton(
         modifier = modifier,
@@ -163,7 +167,7 @@ private fun AspectSelectionMenu(
     val aspects = LocalCropperStyle.current.aspects
     OptionsPopup(onDismiss = onDismiss, optionCount = 1 + aspects.size) { i ->
         val unselectedTint = LocalContentColor.current
-        val selectedTint = MaterialTheme.colors.secondaryVariant
+        val selectedTint = MaterialTheme.colorScheme.secondary
         if (i == 0) IconButton(onClick = { onLock(!lock) }) {
             Icon(
                 Icons.Default.Lock, null,

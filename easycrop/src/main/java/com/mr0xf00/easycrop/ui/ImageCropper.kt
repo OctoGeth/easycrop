@@ -2,37 +2,27 @@ package com.mr0xf00.easycrop.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.mr0xf00.easycrop.*
 import com.mr0xf00.easycrop.R
 
-private val CropperDialogProperties = @OptIn(ExperimentalComposeUiApi::class) (DialogProperties(
-    usePlatformDefaultWidth = false,
-    dismissOnBackPress = false,
-    dismissOnClickOutside = false
-))
-
 @Composable
-fun ImageCropperDialog(
+fun ImageCropper(
     state: CropState,
     style: CropperStyle = DefaultCropperStyle,
     topBar: @Composable (CropState) -> Unit = { DefaultTopBar(it) },
@@ -44,9 +34,9 @@ fun ImageCropperDialog(
         ) { innerPadding ->
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .fillMaxSize()
                     .clipToBounds()
-                    .modifier = Modifier.padding(innerPadding),
+                    .padding(innerPadding),
             ) {
                 CropperPreview(state = state, modifier = Modifier.fillMaxSize())
                 cropControls(state)
@@ -68,12 +58,13 @@ private fun BoxScope.DefaultControls(state: CropState) {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DefaultTopBar(state: CropState) {
     TopAppBar(title = {},
         navigationIcon = {
             IconButton(onClick = { state.done(accept = false) }) {
-                Icon(Icons.Default.ArrowBack, null)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
             }
         },
         actions = {
