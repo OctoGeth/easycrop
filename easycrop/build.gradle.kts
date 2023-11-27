@@ -53,19 +53,18 @@ dependencies {
 
 publishing {
     publications {
-        register<MavenPublication>("release") {
+        create<MavenPublication>("jitpack") {
+            from(components["java"])
+
             groupId = "com.github.OctoGeth"
             artifactId = "easycrop"
-            version = "0.1.1"
+            version = "0.1.3"
 
-            afterEvaluate {
-                from(components["release"])
+            pom {
+                name.set("Easycrop")
+                description.set("Simple image cropper/resizer for Android compase app")
             }
         }
     }
-
-    singleVariant("release") {
-        withSourcesJar()
-        withJavadocJar()
-    }
 }
+
