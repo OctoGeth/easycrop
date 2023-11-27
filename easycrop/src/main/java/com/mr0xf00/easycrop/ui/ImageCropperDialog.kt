@@ -35,32 +35,21 @@ private val CropperDialogProperties = @OptIn(ExperimentalComposeUiApi::class) (D
 fun ImageCropperDialog(
     state: CropState,
     style: CropperStyle = DefaultCropperStyle,
-    dialogProperties: DialogProperties = CropperDialogProperties,
-    dialogPadding: PaddingValues = PaddingValues(16.dp),
-    dialogShape: Shape = RoundedCornerShape(8.dp),
     topBar: @Composable (CropState) -> Unit = { DefaultTopBar(it) },
     cropControls: @Composable BoxScope.(CropState) -> Unit = { DefaultControls(it) }
 ) {
     CompositionLocalProvider(LocalCropperStyle provides style) {
-        Dialog(
-            onDismissRequest = { state.done(accept = false) },
-            properties = dialogProperties,
-        ) {
-            Surface(
-                modifier = Modifier.padding(dialogPadding),
-                shape = dialogShape,
+        Scaffold(
+            topBar = { topBar(state) },
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .clipToBounds()
+                    .modifier = Modifier.padding(innerPadding),
             ) {
-                Column {
-                    topBar(state)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clipToBounds()
-                    ) {
-                        CropperPreview(state = state, modifier = Modifier.fillMaxSize())
-                        cropControls(state)
-                    }
-                }
+                CropperPreview(state = state, modifier = Modifier.fillMaxSize())
+                cropControls(state)
             }
         }
     }
