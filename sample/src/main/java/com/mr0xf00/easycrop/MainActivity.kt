@@ -5,7 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.mr0xf00.easycrop.presentation.ImagesViewModel
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
 private fun App(viewModel: ImagesViewModel) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = MaterialTheme.colorScheme.background
     ) {
         ViewModelDemo(viewModel = viewModel, modifier = Modifier.fillMaxSize())
 //        SimpleDemo(modifier = Modifier.fillMaxSize())

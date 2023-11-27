@@ -3,7 +3,12 @@ package com.mr0xf00.easycrop.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +39,7 @@ fun CropError.getMessage(): String = remember(this) {
 fun LoadingDialog(status: CropperLoading) {
     var dismissed by remember(status) { mutableStateOf(false) }
     if (!dismissed) Dialog(onDismissRequest = { dismissed = true }) {
-        Surface(shape = MaterialTheme.shapes.small, elevation = 6.dp) {
+        Surface(shape = MaterialTheme.shapes.small, shadowElevation = 6.dp) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
