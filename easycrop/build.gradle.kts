@@ -31,12 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -49,22 +43,19 @@ dependencies {
     implementation ("androidx.compose.material:material")
     implementation ("androidx.compose.ui:ui")
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-}
 
-publishing {
-    publications {
-        create<MavenPublication>("jitpack") {
-            from(components["java"])
+    afterEvaluate {
+        publishing {
+            publications {
+                create<MavenPublication>("release") {
+                    from(components["release"])
 
-            groupId = "com.github.OctoGeth"
-            artifactId = "easycrop"
-            version = "0.1.3"
-
-            pom {
-                name.set("Easycrop")
-                description.set("Simple image cropper/resizer for Android compase app")
+                    groupId = "com.github.OctoGeth"
+                    artifactId = "easycrop"
+                    version = "0.1.4"
+                }
             }
         }
     }
-}
 
+}
