@@ -3,6 +3,7 @@ package com.mr0xf00.easycrop.ui
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.toRect
@@ -26,22 +27,24 @@ fun CropperPreview(
 ) {
     val style = LocalCropperStyle.current
     val imgTransform by animateImgTransform(target = state.transform)
-    val imgMat = remember(imgTransform, state.src.size) { imgTransform.asMatrix(state.src.size) }
-    val viewMat = remember { ViewMat() }
-    var view by remember { mutableStateOf(IntSize.Zero) }
-    var pendingDrag by remember { mutableStateOf<DragHandle?>(null) }
+    val imgMat =
+        rememberSaveable(imgTransform, state.src.size) { imgTransform.asMatrix(state.src.size) }
+    val viewMat = rememberSaveable { ViewMat() }
+    var view by rememberSaveable { mutableStateOf(IntSize.Zero) }
+    var pendingDrag by rememberSaveable { mutableStateOf<DragHandle?>(null) }
     val viewPadding = LocalDensity.current.run { style.touchRad.toPx() }
-    val totalMat = remember(viewMat.matrix, imgMat) { imgMat * viewMat.matrix }
+    val totalMat = rememberSaveable(viewMat.matrix, imgMat) { imgMat * viewMat.matrix }
     val image = rememberLoadedImage(state.src, view, totalMat)
-    val cropRect = remember(state.region, viewMat.matrix) {
+    val cropRect = rememberSaveable(state.region, viewMat.matrix) {
         viewMat.matrix.map(state.region)
     }
-    val cropPath = remember(state.shape, cropRect) { state.shape.asPath(cropRect) }
+    val cropPath = rememberSaveable(state.shape, cropRect) { state.shape.asPath(cropRect) }
     BringToView(
         enabled = style.autoZoom,
         hasOverride = pendingDrag != null,
         outer = view.toSize().toRect().deflate(viewPadding),
-        mat = viewMat, local = state.region,
+        mat = viewMat,
+        local = state.region,
     )
     Canvas(
         modifier = modifier

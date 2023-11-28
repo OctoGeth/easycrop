@@ -12,13 +12,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mr0xf00.easycrop.*
 import com.mr0xf00.easycrop.R
 
@@ -35,6 +39,15 @@ fun ImageCropperDialog(
     topBar: @Composable (CropState) -> Unit = { DefaultTopBar(it) },
     cropControls: @Composable BoxScope.(CropState) -> Unit = { DefaultControls(it) }
 ) {
+    val systemUiController: SystemUiController = rememberSystemUiController()
+
+    DisposableEffect(Unit) {
+        systemUiController.setNavigationBarColor(Color.Black)
+        onDispose {
+            systemUiController.setNavigationBarColor(Color.White)
+        }
+    }
+
     CompositionLocalProvider(LocalCropperStyle provides style) {
         BasicAlertDialog(
             modifier = modifier,
@@ -46,6 +59,7 @@ fun ImageCropperDialog(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(horizontal = 16.dp)
                         .clipToBounds(),
                 ) {
                     CropperPreview(state = state, modifier = Modifier.fillMaxSize())
@@ -65,7 +79,7 @@ private fun BoxScope.DefaultControls(state: CropState) {
         state = state,
         modifier = Modifier
             .align(if (!verticalControls) Alignment.BottomCenter else Alignment.CenterEnd)
-            .padding(12.dp),
+            .padding(16.dp),
     )
 }
 

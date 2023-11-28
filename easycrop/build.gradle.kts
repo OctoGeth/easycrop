@@ -47,6 +47,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation("androidx.compose.material3:material3-android:1.2.0-alpha11")
     implementation("androidx.compose.ui:ui")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
     afterEvaluate {
@@ -57,7 +58,7 @@ dependencies {
 
                     groupId = "com.github.OctoGeth"
                     artifactId = "easycrop"
-                    version = "0.1.17"
+                    version = "0.1.18"
                 }
             }
         }
