@@ -22,7 +22,7 @@ fun DemoContent(
 ) {
     if (cropState != null) {
         EasyCropTheme(darkTheme = true) {
-            ImageCropper(state = cropState)
+            ImageCropperScreen(state = cropState)
         }
     }
     if (cropState == null && loadingStatus != null) {

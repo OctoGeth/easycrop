@@ -16,7 +16,7 @@ import kotlin.concurrent.thread
  * The resulting image will be scaled down to fit [maxResultSize] if provided.
  * [file] will be used as a source.
  */
-public suspend fun ImageCropper.crop(
+suspend fun ImageCropper.crop(
     file: File, maxResultSize: IntSize? = DefaultMaxCropSize,
 ): CropResult {
     return crop(maxResultSize) { file.toImageSrc() }
@@ -30,7 +30,7 @@ public suspend fun ImageCropper.crop(
  * Set [cacheBeforeUse] to false if you're certain that reopening it multiple times won't be a problem,
  * true otherwise.
  */
-public suspend fun ImageCropper.crop(
+suspend fun ImageCropper.crop(
     uri: Uri,
     context: Context,
     maxResultSize: IntSize? = DefaultMaxCropSize,

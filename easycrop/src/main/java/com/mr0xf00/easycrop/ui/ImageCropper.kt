@@ -22,7 +22,7 @@ import com.mr0xf00.easycrop.*
 import com.mr0xf00.easycrop.R
 
 @Composable
-fun ImageCropper(
+fun ImageCropperScreen(
     state: CropState,
     style: CropperStyle = DefaultCropperStyle,
     topBar: @Composable (CropState) -> Unit = { DefaultTopBar(it) },

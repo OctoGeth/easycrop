@@ -23,7 +23,7 @@ public enum class CropError : CropResult {
     /** The supplied image is invalid, not supported by the codec
      * or you don't have the required permissions to read it */
     LoadingError,
-    /** The result could not be saved. Try reducing the maxSize supplied to [ImageCropper.crop] */
+    /** The result could not be saved. Try reducing the maxSize supplied to [ImageCropperScreen.crop] */
     SavingError
 }
 
@@ -66,7 +66,7 @@ public interface ImageCropper {
  * The resulting image will be scaled down to fit [maxResultSize] if provided.
  * [bmp] will be used as a source.
  */
-public suspend fun ImageCropper.crop(
+suspend fun ImageCropper.crop(
     maxResultSize: IntSize? = DefaultMaxCropSize,
     bmp: ImageBitmap
 ): CropResult = crop(maxResultSize = maxResultSize) {
@@ -74,14 +74,14 @@ public suspend fun ImageCropper.crop(
 }
 
 @Composable
-public fun rememberImageCropper() : ImageCropper {
-    return remember { ImageCropper() }
+fun rememberImageCropper() : ImageCropper {
+    return remember { ImageCropperScreen() }
 }
 
 /**
- * Creates an [ImageCropper] instance.
+ * Creates an [ImageCropperScreen] instance.
  */
-public fun ImageCropper(): ImageCropper = object : ImageCropper {
+public fun ImageCropperScreen(): ImageCropper = object : ImageCropper {
     override var cropState: CropState? by mutableStateOf(null)
     private val cropStateFlow = snapshotFlow { cropState }
     override var loadingStatus: CropperLoading? by mutableStateOf(null)
