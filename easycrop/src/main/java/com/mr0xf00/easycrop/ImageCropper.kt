@@ -8,26 +8,28 @@ import com.mr0xf00.easycrop.images.ImageBitmapSrc
 import com.mr0xf00.easycrop.images.ImageSrc
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.takeWhile
+
 /** Union type denoting the possible results after a crop operation is done */
-public sealed interface CropResult {
+sealed interface CropResult {
     /** The final result as an ImageBitmap.
      * use [asAndroidBitmap] if you need an [android.graphics.Bitmap].
      */
     data class Success(val bitmap: ImageBitmap) : CropResult
 
     /** The user has cancelled the operation or another session was started. */
-    object Cancelled : CropResult
+    data object Cancelled : CropResult
 }
 
-public enum class CropError : CropResult {
+enum class CropError : CropResult {
     /** The supplied image is invalid, not supported by the codec
      * or you don't have the required permissions to read it */
     LoadingError,
+
     /** The result could not be saved. Try reducing the maxSize supplied to [ImageCropperDialog.crop] */
     SavingError
 }
 
-public enum class CropperLoading {
+enum class CropperLoading {
     /** The image is being prepared. */
     PreparingImage,
 
@@ -42,7 +44,7 @@ internal val DefaultMaxCropSize = IntSize(3000, 3000)
  * Allows starting new crop sessions as well as getting the state of the pending crop.
  */
 @Stable
-public interface ImageCropper {
+interface ImageCropper {
     /** The pending crop state, if any */
     val cropState: CropState?
 
@@ -74,14 +76,25 @@ suspend fun ImageCropper.crop(
 }
 
 @Composable
-fun rememberImageCropper() : ImageCropper {
-    return remember { ImageCropperDialog() }
+fun rememberImageCropper(
+    defaultShape: CropShape = RectCropShape,
+    defaultAspectLock: Boolean = false,
+): ImageCropper {
+    return remember {
+        ImageCropperDialog(
+            defaultShape = defaultShape,
+            defaultAspectLock = defaultAspectLock,
+        )
+    }
 }
 
 /**
  * Creates an [ImageCropperDialog] instance.
  */
-public fun ImageCropperDialog(): ImageCropper = object : ImageCropper {
+fun ImageCropperDialog(
+    defaultShape: CropShape = RectCropShape,
+    defaultAspectLock: Boolean = false,
+): ImageCropper = object : ImageCropper {
     override var cropState: CropState? by mutableStateOf(null)
     private val cropStateFlow = snapshotFlow { cropState }
     override var loadingStatus: CropperLoading? by mutableStateOf(null)
@@ -92,7 +105,11 @@ public fun ImageCropperDialog(): ImageCropper = object : ImageCropper {
         cropState = null
         val src = withLoading(CropperLoading.PreparingImage) { createSrc() }
             ?: return CropError.LoadingError
-        val newCrop = CropState(src) { cropState = null }
+        val newCrop = CropState(
+            src = src,
+            defaultShape = defaultShape,
+            defaultAspectLock = defaultAspectLock,
+        ) { cropState = null }
         cropState = newCrop
         cropStateFlow.takeWhile { it === newCrop }.collect()
         if (!newCrop.accepted) return CropResult.Cancelled

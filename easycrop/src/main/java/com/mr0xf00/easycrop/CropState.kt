@@ -29,11 +29,11 @@ interface CropState {
 
 internal fun CropState(
     src: ImageSrc,
+    defaultShape: CropShape = RectCropShape,
+    defaultAspectLock: Boolean = false,
     onDone: () -> Unit = {},
 ): CropState = object : CropState {
     val defaultTransform: ImgTransform = ImgTransform.Identity
-    val defaultShape: CropShape = RectCropShape
-    val defaultAspectLock: Boolean = false
     override val src: ImageSrc get() = src
     private var _transform: ImgTransform by mutableStateOf(defaultTransform)
     override var transform: ImgTransform
@@ -49,7 +49,6 @@ internal fun CropState(
     override var region
         get() = _region
         set(value) {
-//            _region = value
             _region = updateRegion(
                 old = _region, new = value,
                 bounds = imgRect, aspectLock = aspectLock
