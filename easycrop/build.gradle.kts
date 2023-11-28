@@ -59,7 +59,7 @@ dependencies {
 
                     groupId = "com.github.OctoGeth"
                     artifactId = "easycrop"
-                    version = "0.1.9"
+                    version = "0.1.10"
                 }
             }
         }
