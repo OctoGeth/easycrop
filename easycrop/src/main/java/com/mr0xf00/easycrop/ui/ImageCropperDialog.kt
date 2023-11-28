@@ -62,7 +62,6 @@ fun ImageCropperDialog(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 16.dp)
                         .clipToBounds(),
                 ) {
                     CropperPreview(state = state, modifier = Modifier.fillMaxSize())
