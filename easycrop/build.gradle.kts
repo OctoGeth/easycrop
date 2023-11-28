@@ -55,9 +55,9 @@ dependencies {
                 create<MavenPublication>("release") {
                     from(components["release"])
 
-                    groupId = "com.github.OctoGeth"
+                    groupId = "io.github.OctoGeth"
                     artifactId = "easycrop"
-                    version = "0.1.14"
+                    version = "0.1.1"
                 }
             }
         }
