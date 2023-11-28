@@ -16,13 +16,13 @@ import com.mr0xf00.easycrop.images.ImageSrc
 
 /** State for the current image being cropped */
 @Stable
-public interface CropState {
-    public val src: ImageSrc
-    public var transform: ImgTransform
-    public var region: Rect
-    public var aspectLock: Boolean
-    public var shape: CropShape
-    public val accepted: Boolean
+interface CropState {
+    val src: ImageSrc
+    var transform: ImgTransform
+    var region: Rect
+    var aspectLock: Boolean
+    var shape: CropShape
+    val accepted: Boolean
     fun done(accept: Boolean)
     fun reset()
 }

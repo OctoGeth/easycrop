@@ -65,7 +65,6 @@ internal fun CropperControls(
                     onDismiss = { menu = false },
                     region = state.region,
                     onRegion = { state.region = it },
-                    lock = state.aspectLock,
                     onLock = { state.aspectLock = it }
                 )
             }
@@ -161,27 +160,22 @@ private fun AspectSelectionMenu(
     onDismiss: () -> Unit,
     region: Rect,
     onRegion: (Rect) -> Unit,
-    lock: Boolean,
     onLock: (Boolean) -> Unit
 ) {
     val aspects = LocalCropperStyle.current.aspects
-    OptionsPopup(onDismiss = onDismiss, optionCount = 1 + aspects.size) { i ->
+    OptionsPopup(onDismiss = onDismiss, optionCount = aspects.size) { i ->
         val unselectedTint = LocalContentColor.current
         val selectedTint = MaterialTheme.colorScheme.secondary
-        if (i == 0) IconButton(onClick = { onLock(!lock) }) {
-            Icon(
-                Icons.Default.Lock, null,
-                tint = if (lock) selectedTint else unselectedTint
+        val aspect = aspects[i]
+        val isSelected = region.size.isAspect(aspect)
+        IconButton(onClick = {
+            onRegion(region.setAspect(aspect))
+            onLock(!isSelected)
+        }) {
+            Text(
+                "${aspect.x}:${aspect.y}",
+                color = if (isSelected) selectedTint else unselectedTint
             )
-        } else {
-            val aspect = aspects[i - 1]
-            val isSelected = region.size.isAspect(aspect)
-            IconButton(onClick = { onRegion(region.setAspect(aspect)) }) {
-                Text(
-                    "${aspect.x}:${aspect.y}",
-                    color = if (isSelected) selectedTint else unselectedTint
-                )
-            }
         }
     }
 }
