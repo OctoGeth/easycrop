@@ -7,14 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mr0xf00.easycrop.CropError
 import com.mr0xf00.easycrop.CropResult
-import com.mr0xf00.easycrop.ImageCropperScreen
+import com.mr0xf00.easycrop.ImageCropperScreenDialog
 import com.mr0xf00.easycrop.crop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ImagesViewModel(private val app: Application) : AndroidViewModel(app) {
-    val imageCropper = ImageCropperScreen()
+    val imageCropper = ImageCropperScreenDialog()
     private val _selectedImage = MutableStateFlow<ImageBitmap?>(null)
     val selectedImage = _selectedImage.asStateFlow()
     private val _cropError = MutableStateFlow<CropError?>(null)
