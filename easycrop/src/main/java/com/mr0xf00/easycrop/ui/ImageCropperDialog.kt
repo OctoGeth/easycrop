@@ -1,6 +1,7 @@
 package com.mr0xf00.easycrop.ui
 
 import android.content.res.Configuration
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -40,6 +41,8 @@ fun ImageCropperDialog(
     cropControls: @Composable BoxScope.(CropState) -> Unit = { DefaultControls(it) }
 ) {
     val systemUiController: SystemUiController = rememberSystemUiController()
+
+    BackHandler {}
 
     DisposableEffect(Unit) {
         systemUiController.setNavigationBarColor(Color.Black)
