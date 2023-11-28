@@ -3,6 +3,7 @@ package com.mr0xf00.easycrop.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.mr0xf00.easycrop.*
 import com.mr0xf00.easycrop.images.rememberLoadedImage
@@ -52,6 +54,7 @@ fun CropperPreview(
         modifier = modifier
             .onGloballyPositioned { view = it.size }
             .background(color = style.backgroundColor)
+            .padding(horizontal = 16.dp)
             .cropperTouch(
                 region = state.region,
                 onRegion = { state.region = it },
