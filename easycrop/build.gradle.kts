@@ -14,8 +14,6 @@ android {
 
     defaultConfig {
         minSdk = 23
-        targetSdk = 34
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     composeOptions {
@@ -57,9 +55,9 @@ dependencies {
                 create<MavenPublication>("release") {
                     from(components["release"])
 
-                    groupId = "com.github.OctoGeth"
+                    groupId = "com.github.octogeth"
                     artifactId = "easycrop"
-                    version = "0.1.10"
+                    version = "0.1.11"
                 }
             }
         }
